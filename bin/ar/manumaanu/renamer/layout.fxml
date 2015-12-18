@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="301.0" prefWidth="715.0" onMouseDragged="#anchorPaneOnDragDetected" onMousePressed="#anchorPaneOnMousePressed" styleClass="background" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.manumaanu.renamer.Controller">
+<AnchorPane fx:id="anchorPane" onMouseDragged="#anchorPaneOnDragDetected" onMousePressed="#anchorPaneOnMousePressed" prefHeight="301.0" prefWidth="715.0" styleClass="background" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.manumaanu.renamer.Controller">
 	<children>
 		<GridPane fx:id="gridPane" layoutX="21.0" layoutY="79.0" prefHeight="168.0" prefWidth="681.0">
 			<columnConstraints>

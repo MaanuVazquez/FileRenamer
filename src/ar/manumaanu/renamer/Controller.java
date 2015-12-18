@@ -1,6 +1,10 @@
 package ar.manumaanu.renamer;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.ResultSet;
 
 import ar.manumaanu.database.*;
@@ -88,7 +92,6 @@ public class Controller {
 		AppData appfolder = new AppData(this.getClass().getPackage().getName());
 		db = new Database(appfolder.getOurAppDataFolder() + "/rename.db");
 		db.createTable();
-		// buttonHelp.setVisible(false);
 
 	}
 
@@ -127,63 +130,60 @@ public class Controller {
 	private void buttonRenameOnAction() {
 
 		if (fileRenamer == null || textDirectory.getText().isEmpty()) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("fileRENAMER: Error");
-			alert.setHeaderText(null);
-			alert.setContentText("ERROR: No directory selected");
-			alert.showAndWait();
-			return;
-		}
+			alertError("ERROR: No directory selected");
+		} else if (textFile.getText().trim().isEmpty() && !checkBoxUseDatabase.isSelected()) {
+			alertError("ERROR: No current fileName selected");
+		} else if (textName.getText().trim().isEmpty() && !checkBoxUseDatabase.isSelected()) {
+			alertError("ERROR: No desired name selected");
+		} else {
 
-		if (textFile.getText().trim().isEmpty() && !checkBoxUseDatabase.isSelected()) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("fileRENAMER: Error");
-			alert.setHeaderText(null);
-			alert.setContentText("ERROR: No current fileName selected");
-			alert.showAndWait();
-			return;
-		}
+			if (checkBoxUseDatabase.isSelected()) {
 
-		if (textName.getText().trim().isEmpty() && !checkBoxUseDatabase.isSelected()) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("fileRENAMER: Error");
-			alert.setHeaderText(null);
-			alert.setContentText("ERROR: No desired name selected");
-			alert.showAndWait();
-			return;
-		}
+				try {
+					ResultSet resultSet = this.db.getResultSet();
 
-		if (checkBoxUseDatabase.isSelected()) {
-			try {
-				ResultSet resultSet = this.db.getResultSet();
+					while (resultSet.next()) {
 
-				while (resultSet.next()) {
+						fileRenamer.renameFiles(resultSet.getString("rename"), resultSet.getString("serie"));
 
-					fileRenamer.renameFiles(resultSet.getString("rename"), resultSet.getString("serie"));
+					}
+
+					resultSet.close();
+					this.db.closeConnection();
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("Error");
 				}
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("Error");
 			}
 
-		}
-
-		if (fileRenamer.renameFiles(textFile.getText(), textName.getText()) > 0) {
-			this.db.insert(1, textFile.getText(), textName.getText());
+			if (fileRenamer.renameFiles(textFile.getText(), textName.getText()) > 0) {
+				this.db.insert(1, textFile.getText(), textName.getText());
+				this.db.optimize();
+			}
 		}
 	}
 
+	private void alertError(String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("fileRENAMER: Error");
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
+
+	// TODO a better way to open the link without awt
 	@FXML
 	private void buttonHelpOnAction() {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("fileRENAMER: Info");
-		alert.setHeaderText("fileRENAMER: USAGE");
-		alert.setContentText(
-				"puto el que readea");
 
-		alert.showAndWait();
-		return;
+		try {
+			Desktop.getDesktop().browse(new URI("https://github.com/MaanuVazquez/FileRenamer#usage"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (URISyntaxException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	@FXML

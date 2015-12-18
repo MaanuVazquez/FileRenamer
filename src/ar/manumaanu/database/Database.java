@@ -76,6 +76,20 @@ public class Database {
 
 	}
 
+	public void optimize() {
+		Statement statement = null;
+
+		try {
+			openConnection();
+			statement = this.connection.createStatement();
+			statement.executeUpdate("VACUUM FULL");
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+		System.out.println("Database optimized succesfully");
+	}
+
 	public void openConnection() {
 
 		this.connection = null;
