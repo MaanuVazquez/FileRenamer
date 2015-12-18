@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="301.0" prefWidth="715.0" onMouseDragged="#anchorPaneOnDragDetected" onMousePressed="#anchorPaneOnMousePressed" styleClass="background" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ar.manumaanu.renamer.Controller">
+	<children>
+		<GridPane fx:id="gridPane" layoutX="21.0" layoutY="79.0" prefHeight="168.0" prefWidth="681.0">
+			<columnConstraints>
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="286.0" minWidth="10.0" prefWidth="70.0" />
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="433.0" minWidth="10.0" prefWidth="412.0" />
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="433.0" minWidth="10.0" prefWidth="32.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints maxHeight="228.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="196.0" minHeight="0.0" prefHeight="63.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="254.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+			</rowConstraints>
+			<children>
+				<TextField fx:id="textDirectory" disable="true" editable="false" GridPane.columnIndex="1" />
+				<Label fx:id="labelDirectory" text="Directory:" />
+				<Label fx:id="labelFile" text="Current Filename:" GridPane.rowIndex="1" />
+				<Label fx:id="labelName" text="Desired Name:" GridPane.rowIndex="2" />
+				<Button fx:id="buttonDirectory" mnemonicParsing="false" onAction="#buttonDirectoryOnAction" prefHeight="25.0" prefWidth="21.0" text="..." GridPane.columnIndex="2">
+					<GridPane.margin>
+						<Insets left="5.0" />
+					</GridPane.margin>
+				</Button>
+				<TextField fx:id="textFile" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<TextField fx:id="textName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+			</children>
+		</GridPane>
+		<Button fx:id="buttonRename" layoutX="578.0" layoutY="253.0" mnemonicParsing="false" onAction="#buttonRenameOnAction" text="RENAME IT!" />
+		<CheckBox fx:id="checkBoxUseDatabase" layoutX="452.0" layoutY="260.0" mnemonicParsing="false" selected="true" text="Use stored data" />
+		<Label layoutX="21.0" layoutY="14.0" styleClass="header" text="fileRENAMER" />
+      <HBox fx:id="hBoxWindowButtons" layoutX="592.0" layoutY="8.0" prefHeight="29.0" prefWidth="109.0" spacing="7.0" styleClass="hbox-window-buttons">
+         <children>
+      		<Button fx:id="buttonHelp" mnemonicParsing="false" onAction="#buttonHelpOnAction" styleClass="miniButtons">
+      			<graphic>
+      				<StackPane fx:id="stackPaneHelp" layoutX="0" layoutY="0" maxHeight="6.0" prefHeight="15.0" prefWidth="20.0" styleClass="stack-pane-help" />
+      			</graphic>
+      		</Button>
+      		<Button fx:id="buttonMinus" mnemonicParsing="false" onAction="#buttonMinusOnAction">
+      			<graphic>
+      				<StackPane fx:id="stackPaneMinus" layoutX="0" layoutY="0" maxHeight="6.0" prefHeight="6.0" prefWidth="20.0" styleClass="stack-pane-minus" />
+      			</graphic>
+      		</Button>
+      		<Button fx:id="buttonExit" mnemonicParsing="false" onAction="#buttonExitOnAction">
+      			<graphic>
+      				<StackPane fx:id="stackPaneCross" layoutX="0" layoutY="0" prefHeight="15.0" prefWidth="20.0" styleClass="stack-pane-cross" />
+      			</graphic>
+      			<styleClass>
+      				<String fx:value="button-exit" />
+      			</styleClass>
+      		</Button>
+         </children>
+      </HBox>
+	</children>
+</AnchorPane>
